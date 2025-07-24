@@ -1,6 +1,7 @@
 package com.thesilentnights.maalinkserver.controller;
 
 import com.thesilentnights.maalinkserver.jna.MaaCore;
+import com.thesilentnights.maalinkserver.jna.MaaStatus;
 import com.thesilentnights.maalinkserver.pojo.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,15 @@ public class TaskController {
 
     @RequestMapping(value = "/status", method = RequestMethod.GET)
     public Response<Boolean> getStatus() {
+        if (MaaStatus.isStatus()){
+            return new Response<>(true,"success",1);
+        }else {
+            return new Response<>(false,"failed",-1);
+        }
+    }
 
+    @RequestMapping(value = "/appendTask",method = RequestMethod.POST)
+    public Response<Boolean> appendTask(){
+        return null;
     }
 }

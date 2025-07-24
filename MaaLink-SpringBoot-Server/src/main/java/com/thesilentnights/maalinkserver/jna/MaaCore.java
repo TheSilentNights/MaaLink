@@ -3,7 +3,6 @@ package com.thesilentnights.maalinkserver.jna;
 import com.sun.jna.Callback;
 import com.sun.jna.Library;
 import com.sun.jna.Pointer;
-import org.springframework.context.annotation.Bean;
 
 public interface MaaCore extends Library {
     String AsstGetVersion();
@@ -17,6 +16,7 @@ public interface MaaCore extends Library {
     void AsstLog(String level, String message);
 
     //获取实例
-    Pointer AsstCreateEx(AsstApiCallback callback,String custom_arg);
+    Pointer AsstCreateEx(AsstApiCallback callback, String custom_arg);
 
+    int AsstAppendTask(Pointer handle,String type,String params);
 }

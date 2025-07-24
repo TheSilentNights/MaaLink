@@ -1,9 +1,8 @@
 package com.thesilentnights.maalinkserver;
 
+import com.thesilentnights.maalinkserver.dao.MaaInstance;
 import com.thesilentnights.maalinkserver.jna.MaaCore;
-import com.thesilentnights.maalinkserver.jna.MaaLinkHandlerInstance;
 import com.thesilentnights.maalinkserver.jna.MaaStatus;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -19,6 +18,9 @@ public class MaaLinkSpringBootServerApplication {
             MaaStatus.setStatus(true);
         }
 
+        if (MaaStatus.isStatus()) {
+            context.getBean(MaaInstance.class).setHandle(context.getBean(MaaCore.class).AsstCreateEx(MaaInstance::callBack, "MaaLink_main"));
+        }
 
 
     }
