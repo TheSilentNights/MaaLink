@@ -19,4 +19,8 @@ public interface MaaCore extends Library {
     Pointer AsstCreateEx(AsstApiCallback callback, String custom_arg);
 
     int AsstAppendTask(Pointer handle,String type,String params);
+
+    boolean AsstStart(Pointer handle);
+
+    boolean AsstConnect(Pointer handle, String adb, String host, String config);
 }

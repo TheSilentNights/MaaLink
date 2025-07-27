@@ -13,15 +13,17 @@ public class MaaInstance {
     private MaaCore maaCore;
     private Pointer handle;//实例句柄
 
-    public void AppendTask(String type, String params) {
-        maaCore.AsstAppendTask(handle, type, params);
-    }
-
     public void setHandle(Pointer handle) {
         this.handle = handle;
     }
 
-    public static void callBack(int msg, String detail_json, String custom_arg) {
-        Logger.getLogger("global").info(msg + detail_json + custom_arg);
+    public MaaCore getMaaCore() {
+        return maaCore;
     }
+
+    public Pointer getHandle() {
+        return handle;
+    }
+
+
 }
