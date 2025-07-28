@@ -26,11 +26,16 @@ public class TaskController {
 
     @RequestMapping(value = "/appendTask", method = RequestMethod.POST)
     public Response<Integer> appendTask(@RequestParam("type") String type, @RequestParam("params") String params) {
-        return new Response<>(maaLinkService.appendTask(type,params),"success",1);
+        return new Response<>(maaLinkService.appendTask(type, params), "success", 1);
     }
 
     @RequestMapping(value = "/start")
-    public Response<Boolean> start(){
-        return new Response<>(maaLinkService.start(),"success",1);
+    public Response<Boolean> start() {
+        return new Response<>(maaLinkService.start(), "success", 1);
+    }
+
+    @RequestMapping(value = "/login")
+    public Response<String> login(@RequestParam("username") String username, @RequestParam("password") String password) {
+        return null;
     }
 }

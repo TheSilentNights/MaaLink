@@ -23,10 +23,8 @@ public class MaaLinkSpringBootServerApplication {
             context.getBean(MaaInstance.class).setHandle(context.getBean(MaaCore.class).AsstCreateEx(MaaLinkService::callBack, "MaaLink_main"));
         }
 
-        context.getBean(MaaLinkService.class).connect();
-        System.out.println(context.getBean(MaaLinkService.class).start());
-
-
+        System.out.println(context.getBean(MaaLinkService.class).connect());
+//        System.out.println(context.getBean(MaaLinkService.class).start());
 
     }
 
