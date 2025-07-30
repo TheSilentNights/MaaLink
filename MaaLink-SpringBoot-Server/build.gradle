@@ -25,6 +25,8 @@ dependencies {
 // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
     implementation 'io.jsonwebtoken:jjwt:0.12.6'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly("org.springframework.boot:spring-boot-devtools")
+    implementation 'com.alibaba.fastjson2:fastjson2:2.0.55'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

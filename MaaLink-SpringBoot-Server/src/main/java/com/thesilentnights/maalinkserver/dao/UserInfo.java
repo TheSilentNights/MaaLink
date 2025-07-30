@@ -10,6 +10,7 @@ import java.util.Properties;
 public class UserInfo {
     String storedUserName;
     String storedPassword;
+    String CurrentUserToken;
 
     public UserInfo() {
         Properties properties = new Properties();
@@ -27,11 +28,19 @@ public class UserInfo {
         }
         try {
             properties.load(Files.newInputStream(file.toPath()));
-            storedUserName = properties.getProperty("username","maaLinkAdmin");
+            storedUserName = properties.getProperty("username","admin");
             storedPassword = properties.getProperty("password","admin123456");
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String getCurrentUserToken() {
+        return CurrentUserToken;
+    }
+
+    public void setCurrentUserToken(String currentUserToken) {
+        CurrentUserToken = currentUserToken;
     }
 
     public String getStoredUserName() {

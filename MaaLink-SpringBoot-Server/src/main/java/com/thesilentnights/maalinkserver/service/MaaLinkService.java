@@ -30,6 +30,6 @@ public class MaaLinkService {
     }
 
     public static void callBack(int msg, String detail_json, String custom_arg) {
-        Logger.getLogger("global").info(msg + detail_json + custom_arg);
+        Logger.getLogger("global").info("MaaLink"+msg + detail_json + custom_arg);
     }
 }

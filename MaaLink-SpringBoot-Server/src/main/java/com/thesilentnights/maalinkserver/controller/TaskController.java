@@ -1,23 +1,23 @@
 package com.thesilentnights.maalinkserver.controller;
 
-import com.thesilentnights.maalinkserver.jna.MaaStatus;
+import com.thesilentnights.maalinkserver.dao.MaaStatus;
 import com.thesilentnights.maalinkserver.pojo.Response;
+import com.thesilentnights.maalinkserver.service.Login;
 import com.thesilentnights.maalinkserver.service.MaaLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1")
 public class TaskController {
     @Autowired
     MaaLinkService maaLinkService;
+    @Autowired
+    Login login;
 
     @RequestMapping(value = "/status", method = RequestMethod.GET)
     public Response<Boolean> getStatus() {
-        if (MaaStatus.isStatus()) {
+        if (MaaStatus.isConnected()) {
             return new Response<>(true, "success", 1);
         } else {
             return new Response<>(false, "failed", -1);
@@ -25,8 +25,13 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/appendTask", method = RequestMethod.POST)
-    public Response<Integer> appendTask(@RequestParam("type") String type, @RequestParam("params") String params) {
-        return new Response<>(maaLinkService.appendTask(type, params), "success", 1);
+    public Response<Integer> appendTask(@RequestHeader("token") String token, @RequestParam("type") String type, @RequestParam("params") String params) {
+        if (login.verify(token)){
+            return new Response<>(maaLinkService.appendTask(type, params), "success", 1);
+        }else {
+            return new Response<>(-1,"failed",505);
+        }
+//        return new Response<>(-1, "failed", 0);
     }
 
     @RequestMapping(value = "/start")
@@ -34,8 +39,15 @@ public class TaskController {
         return new Response<>(maaLinkService.start(), "success", 1);
     }
 
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Response<String> login(@RequestParam("username") String username, @RequestParam("password") String password) {
-        return null;
+        String token = login.login(username, password);
+        return new Response<>(token, token != null ? "success" : "failed", token != null ? 1 : 0);
+    }
+
+    @RequestMapping(value = "/reportStatus", method = RequestMethod.POST)
+    public String reportStatus(@RequestParam("task") String taskId, @RequestParam("status") String status) {
+        System.out.println(taskId + "|||||" + status);
+        return "200OK";
     }
 }

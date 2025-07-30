@@ -5,8 +5,6 @@ import com.thesilentnights.maalinkserver.jna.MaaCore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.logging.Logger;
-
 @Repository
 public class MaaInstance {
     @Autowired
@@ -24,6 +22,4 @@ public class MaaInstance {
     public Pointer getHandle() {
         return handle;
     }
-
-
 }
