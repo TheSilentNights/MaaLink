@@ -1,8 +1,13 @@
 package com.thesilentnights.maalinkserver.service;
 
+import com.alibaba.fastjson2.JSONObject;
+import com.thesilentnights.maalinkserver.MaaLinkSpringBootServerApplication;
+import com.thesilentnights.maalinkserver.dao.CurrentTask;
 import com.thesilentnights.maalinkserver.dao.MaaInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.logging.Logger;
@@ -15,6 +20,8 @@ public class MaaLinkService {
     String adbPath;
     @Value("192.168.71.112:5555")
     String host;
+    @Autowired
+    CurrentTask task;
 
     public boolean start() {
         return maaInstance.getMaaCore().AsstStart(maaInstance.getHandle());
@@ -29,7 +36,5 @@ public class MaaLinkService {
         return maaInstance.getMaaCore().AsstConnect(maaInstance.getHandle(), adbPath, host, "");
     }
 
-    public static void callBack(int msg, String detail_json, String custom_arg) {
-        Logger.getLogger("global").info("MaaLink"+msg + detail_json + custom_arg);
-    }
+
 }
