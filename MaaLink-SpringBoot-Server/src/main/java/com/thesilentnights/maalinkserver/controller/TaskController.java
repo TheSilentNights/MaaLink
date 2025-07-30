@@ -26,10 +26,10 @@ public class TaskController {
 
     @RequestMapping(value = "/appendTask", method = RequestMethod.POST)
     public Response<Integer> appendTask(@RequestHeader("token") String token, @RequestParam("type") String type, @RequestParam("params") String params) {
-        if (login.verify(token)){
+        if (login.verify(token)) {
             return new Response<>(maaLinkService.appendTask(type, params), "success", 1);
-        }else {
-            return new Response<>(-1,"failed",505);
+        } else {
+            return new Response<>(-1, "failed", 505);
         }
     }
 
@@ -44,9 +44,8 @@ public class TaskController {
         return new Response<>(token, token != null ? "success" : "failed", token != null ? 1 : 0);
     }
 
-    @RequestMapping(value = "/reportStatus", method = RequestMethod.POST)
-    public String reportStatus(@RequestParam("task") String taskId, @RequestParam("status") String status) {
-        System.out.println(taskId + "|||||" + status);
-        return "200OK";
+    @RequestMapping(value = "/getCurrentTask", method = RequestMethod.GET)
+    public Response<String> getCurrentTask() {
+        return new Response<>(maaLinkService.getCurrentTask(), "success", 1);
     }
 }

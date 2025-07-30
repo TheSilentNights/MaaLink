@@ -1,6 +1,7 @@
 package com.thesilentnights.maalinkserver.utils;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -26,21 +27,15 @@ public class Auth {
 
     public static boolean checkToken(String token, String verifiedToken, String username) {
         // 解析token
-        Claims claims = Jwts.parser()
-                .verifyWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8))).build().parseSignedClaims(token).getPayload();
+        Claims claims;
+        try{
+            claims = Jwts.parser().verifyWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8))).build().parseSignedClaims(token).getPayload();
+        }catch (ExpiredJwtException e){
+            return false;
+        }
         // 验证负载中的信息
-        if (!verifiedToken.equals(token) && !username.equals(claims.getSubject())) {
-            return false;
-        }
-
-        Date expiration = claims.getExpiration(); // 获取过期时间
-
-        // 验证token是否过期
-        if (expiration.before(new Date())) {
-            return false;
-        }
+        return username.equals(claims.getSubject());
 
         //全都通过就ok
-        return true;
     }
 }
