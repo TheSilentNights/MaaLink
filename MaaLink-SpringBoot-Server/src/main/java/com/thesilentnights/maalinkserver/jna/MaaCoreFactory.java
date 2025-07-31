@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MaaCoreFactory {
-    @Value("./MaaCore.dll")
+    @Value("..\\MaaCore.dll")
     private String pathToMaaCore;
 
     @Bean

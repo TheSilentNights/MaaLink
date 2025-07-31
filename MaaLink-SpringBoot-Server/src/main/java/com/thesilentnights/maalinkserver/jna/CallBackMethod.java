@@ -2,7 +2,7 @@ package com.thesilentnights.maalinkserver.jna;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.thesilentnights.maalinkserver.MaaLinkSpringBootServerApplication;
-import com.thesilentnights.maalinkserver.dao.TaskStorge;
+import com.thesilentnights.maalinkserver.repo.TaskStorge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Repository;

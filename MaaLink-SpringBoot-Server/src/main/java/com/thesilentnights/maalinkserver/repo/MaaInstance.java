@@ -1,4 +1,4 @@
-package com.thesilentnights.maalinkserver.dao;
+package com.thesilentnights.maalinkserver.repo;
 
 import com.sun.jna.Pointer;
 import com.thesilentnights.maalinkserver.jna.MaaCore;

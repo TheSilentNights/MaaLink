@@ -1,7 +1,7 @@
 package com.thesilentnights.maalinkserver;
 
-import com.thesilentnights.maalinkserver.dao.MaaInstance;
-import com.thesilentnights.maalinkserver.dao.MaaStatus;
+import com.thesilentnights.maalinkserver.repo.MaaInstance;
+import com.thesilentnights.maalinkserver.repo.MaaStatus;
 import com.thesilentnights.maalinkserver.jna.CallBackMethod;
 import com.thesilentnights.maalinkserver.jna.MaaCore;
 import com.thesilentnights.maalinkserver.service.MaaLinkService;

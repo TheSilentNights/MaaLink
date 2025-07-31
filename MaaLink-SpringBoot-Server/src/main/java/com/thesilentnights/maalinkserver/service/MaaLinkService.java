@@ -1,7 +1,7 @@
 package com.thesilentnights.maalinkserver.service;
 
-import com.thesilentnights.maalinkserver.dao.TaskStorge;
-import com.thesilentnights.maalinkserver.dao.MaaInstance;
+import com.thesilentnights.maalinkserver.repo.TaskStorge;
+import com.thesilentnights.maalinkserver.repo.MaaInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

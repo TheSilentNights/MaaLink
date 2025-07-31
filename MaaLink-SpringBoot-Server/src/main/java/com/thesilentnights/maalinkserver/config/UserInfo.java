@@ -1,4 +1,4 @@
-package com.thesilentnights.maalinkserver.dao;
+package com.thesilentnights.maalinkserver.config;
 
 import org.springframework.stereotype.Repository;
 

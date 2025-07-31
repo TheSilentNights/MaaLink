@@ -1,6 +1,6 @@
 package com.thesilentnights.maalinkserver.controller;
 
-import com.thesilentnights.maalinkserver.dao.MaaStatus;
+import com.thesilentnights.maalinkserver.repo.MaaStatus;
 import com.thesilentnights.maalinkserver.pojo.Response;
 import com.thesilentnights.maalinkserver.service.Login;
 import com.thesilentnights.maalinkserver.service.MaaLinkService;
