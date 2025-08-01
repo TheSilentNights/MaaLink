@@ -1,17 +1,24 @@
 package com.thesilentnights.maalinkserver;
 
 import com.thesilentnights.maalinkserver.jna.MaaCore;
+import com.thesilentnights.maalinkserver.repo.MaaStatus;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class MaaLinkSpringBootServerApplication {
+    private static ApplicationContext context;
 
     public static void main(String[] args) {
-        ApplicationContext context = SpringApplication.run(MaaLinkSpringBootServerApplication.class, args);
-        System.out.println(context.getBean(MaaCore.class).AsstGetVersion());
-//        System.out.println(Native.load("D:\\maa\\MaaCore.dll", MaaCore.class).AsstGetVersion());
+        context = SpringApplication.run(MaaLinkSpringBootServerApplication.class, args);
+
+        if (context.getBean(MaaCore.class).AsstLoadResource("..\\")) {
+            MaaStatus.setStatus(true);
+        }
     }
 
+    public static ApplicationContext getContext() {
+        return context;
+    }
 }
