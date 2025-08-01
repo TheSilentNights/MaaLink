@@ -16,8 +16,6 @@ public class MaaLinkSpringBootServerApplication {
         if (context.getBean(MaaCore.class).AsstLoadResource("..\\")) {
             MaaStatus.setStatus(true);
         }
-
-//        System.out.println(context.getBean(MaaLinkService.class).connect());
     }
 
     public static ApplicationContext getContext() {
