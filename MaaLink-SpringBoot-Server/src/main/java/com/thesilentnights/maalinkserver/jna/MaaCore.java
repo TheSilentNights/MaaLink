@@ -3,7 +3,6 @@ package com.thesilentnights.maalinkserver.jna;
 import com.sun.jna.Callback;
 import com.sun.jna.Library;
 import com.sun.jna.Pointer;
-import com.sun.jna.ptr.IntByReference;
 
 public interface MaaCore extends Library {
     String AsstGetVersion();

@@ -43,10 +43,12 @@ public class CallBackMethod implements MaaCore.AsstApiCallback {
         }
 
         //全部完成
-        if (msg == AsstMsg.ALL_TASKS_COMPLETED.getValue()){
+        if (msg == AsstMsg.ALL_TASKS_COMPLETED.getValue()) {
             logger.info("all task completed");
+            //这里不能autowired不然互相依赖
             MaaLinkService maaLinkService = MaaLinkSpringBootServerApplication.getContext().getBean(MaaLinkService.class);
             maaLinkService.destroy();
+            currentTask.clearTasks();
         }
 
 

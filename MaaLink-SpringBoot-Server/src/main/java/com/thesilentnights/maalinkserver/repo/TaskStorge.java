@@ -7,22 +7,22 @@ import java.util.Map;
 
 @Repository
 public class TaskStorge {
-    Map<Integer,String> currentTasks = new HashMap<>();
+    Map<Integer, String> currentTasks = new HashMap<>();
     int currentTaskId;
 
-    public void addTask(int taskId,String taskType){
-        currentTasks.put(taskId,taskType);
+    public void addTask(int taskId, String taskType) {
+        currentTasks.put(taskId, taskType);
     }
 
-    public String getTaskById(int id){
+    public String getTaskById(int id) {
         return currentTasks.get(id);
     }
 
-    public void finishTask(int taskId){
+    public void finishTask(int taskId) {
         currentTasks.remove(taskId);
     }
 
-    public boolean checkTask(String taskType){
+    public boolean checkTask(String taskType) {
         return !currentTasks.containsValue(taskType);
     }
 
@@ -30,7 +30,12 @@ public class TaskStorge {
         this.currentTaskId = currentTaskId;
     }
 
-    public int getCurrentTaskId(){
+    public void clearTasks() {
+        currentTasks.clear();
+        currentTaskId = 0;
+    }
+
+    public int getCurrentTaskId() {
         return currentTaskId;
     }
 }

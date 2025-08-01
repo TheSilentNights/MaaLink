@@ -60,7 +60,7 @@ public class MaaLinkService {
     }
 
     public void destroy() {
-        if (maaInstance.getHandle() == null){
+        if (maaInstance.getHandle() == null) {
             return;
         }
         maaInstance.getMaaCore().AsstDestroy(maaInstance.getHandle());
@@ -68,9 +68,9 @@ public class MaaLinkService {
     }
 
     //检查maa链接句斌是否被正确创建
-    private void checkStatus(){
-        if (maaInstance.getHandle() == null){
-            if (!createHandle()){
+    private void checkStatus() {
+        if (maaInstance.getHandle() == null) {
+            if (!createHandle()) {
                 throw new RuntimeException("Failed to create MaaLink handle");
             }
         }

@@ -13,11 +13,11 @@ public class MaaStatus {
         MaaStatus.status = status;
     }
 
-    public static void setConnect(boolean connect){
+    public static void setConnect(boolean connect) {
         MaaStatus.connect = connect;
     }
 
-    public static boolean isConnected(){
+    public static boolean isConnected() {
         return MaaStatus.connect;
     }
 }

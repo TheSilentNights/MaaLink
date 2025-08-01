@@ -1,11 +1,7 @@
 package com.thesilentnights.maalinkserver;
 
-import com.sun.jna.Pointer;
-import com.thesilentnights.maalinkserver.repo.MaaInstance;
-import com.thesilentnights.maalinkserver.repo.MaaStatus;
-import com.thesilentnights.maalinkserver.jna.CallBackMethod;
 import com.thesilentnights.maalinkserver.jna.MaaCore;
-import com.thesilentnights.maalinkserver.service.MaaLinkService;
+import com.thesilentnights.maalinkserver.repo.MaaStatus;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;

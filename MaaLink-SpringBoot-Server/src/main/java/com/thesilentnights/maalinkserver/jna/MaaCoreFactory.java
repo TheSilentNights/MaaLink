@@ -11,7 +11,7 @@ public class MaaCoreFactory {
     private String pathToMaaCore;
 
     @Bean
-    public MaaCore maaCore(){
+    public MaaCore maaCore() {
         return Native.load(pathToMaaCore, MaaCore.class);
     }
 }

@@ -2,7 +2,10 @@ package com.thesilentnights.maalinkserver.config;
 
 import org.springframework.stereotype.Repository;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Properties;
 
@@ -15,7 +18,7 @@ public class UserInfo {
     public UserInfo() {
         Properties properties = new Properties();
         File file = new File("./userinfo.properties");
-        if (!file.exists()){
+        if (!file.exists()) {
             try {
                 file.createNewFile();
                 BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
@@ -28,8 +31,8 @@ public class UserInfo {
         }
         try {
             properties.load(Files.newInputStream(file.toPath()));
-            storedUserName = properties.getProperty("username","admin");
-            storedPassword = properties.getProperty("password","admin123456");
+            storedUserName = properties.getProperty("username", "admin");
+            storedPassword = properties.getProperty("password", "admin123456");
         } catch (Exception e) {
             e.printStackTrace();
         }
