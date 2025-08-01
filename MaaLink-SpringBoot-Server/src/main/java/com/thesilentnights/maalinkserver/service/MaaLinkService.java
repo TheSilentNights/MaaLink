@@ -71,7 +71,7 @@ public class MaaLinkService {
     private void checkStatus(){
         if (maaInstance.getHandle() == null){
             if (!createHandle()){
-//                throw new RuntimeException("Failed to create MaaLink handle");
+                throw new RuntimeException("Failed to create MaaLink handle");
             }
         }
     }
