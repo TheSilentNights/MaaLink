@@ -2,22 +2,42 @@ package com.thesilentnights.maalinkserver.pojo;
 
 
 public class Response<T> {
-    T data;
-    String message;
-    int status;
+    private int code;
+    private String message;
+    private T data;
 
-    public Response(T data, String message, int status) {
-        this.data = data;
+    private Response(int code, String message, T data) {
+        this.code = code;
         this.message = message;
-        this.status = status;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
         this.data = data;
+    }
+
+    // 成功响应（无数据）
+    public static Response<Void> success() {
+        return new Response<>(200, "操作成功", null);
+    }
+
+    // 成功响应（带数据）
+    public static <T> Response<T> success(T data) {
+        return new Response<>(200, "操作成功", data);
+    }
+
+    // 自定义响应
+    public static <T> Response<T> response(int code, String message, T data) {
+        return new Response<>(code, message, data);
+    }
+
+    // 错误响应
+    public static <T> Response<T> error(int code, String message) {
+        return new Response<>(code, message, null);
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public String getMessage() {
@@ -28,11 +48,11 @@ public class Response<T> {
         this.message = message;
     }
 
-    public int getStatus() {
-        return status;
+    public T getData() {
+        return data;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setData(T data) {
+        this.data = data;
     }
 }

@@ -1,5 +1,6 @@
 package com.thesilentnights.maalinkserver;
 
+import com.sun.jna.Pointer;
 import com.thesilentnights.maalinkserver.repo.MaaInstance;
 import com.thesilentnights.maalinkserver.repo.MaaStatus;
 import com.thesilentnights.maalinkserver.jna.CallBackMethod;
@@ -16,15 +17,11 @@ public class MaaLinkSpringBootServerApplication {
     public static void main(String[] args) {
         context = SpringApplication.run(MaaLinkSpringBootServerApplication.class, args);
 
-        if (context.getBean(MaaCore.class).AsstLoadResource("./")) {
+        if (context.getBean(MaaCore.class).AsstLoadResource("..\\")) {
             MaaStatus.setStatus(true);
         }
 
-        if (MaaStatus.isStatus()) {
-            context.getBean(MaaInstance.class).setHandle(context.getBean(MaaCore.class).AsstCreateEx(context.getBean(CallBackMethod.class), "MaaLink_main"));
-        }
-
-        System.out.println(context.getBean(MaaLinkService.class).connect());
+//        System.out.println(context.getBean(MaaLinkService.class).connect());
     }
 
     public static ApplicationContext getContext() {

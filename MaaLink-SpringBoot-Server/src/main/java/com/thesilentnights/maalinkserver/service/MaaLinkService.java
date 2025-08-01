@@ -1,7 +1,9 @@
 package com.thesilentnights.maalinkserver.service;
 
-import com.thesilentnights.maalinkserver.repo.TaskStorge;
+import com.sun.jna.Pointer;
+import com.thesilentnights.maalinkserver.jna.CallBackMethod;
 import com.thesilentnights.maalinkserver.repo.MaaInstance;
+import com.thesilentnights.maalinkserver.repo.TaskStorge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,22 +18,62 @@ public class MaaLinkService {
     String host;
     @Autowired
     TaskStorge taskStorge;
+    @Autowired
+    CallBackMethod callBackMethod;
 
     public boolean start() {
-        return maaInstance.getMaaCore().AsstStart(maaInstance.getHandle());
+        checkStatus();
+        if (connect()) {
+            return maaInstance.getMaaCore().AsstStart(maaInstance.getHandle());
+        } else {
+            return false;
+        }
     }
 
     //返回任务参数
     public int appendTask(String type, String params) {
-        return maaInstance.getMaaCore().AsstAppendTask(maaInstance.getHandle(), type, params);
+        checkStatus();
+        int taskId = maaInstance.getMaaCore().AsstAppendTask(maaInstance.getHandle(), type, params);
+        if (taskId > 0) {
+            taskStorge.addTask(taskId, type);
+        }
+        return taskId;
     }
 
-    public boolean connect() {
+    private boolean connect() {
+        checkStatus();
         return maaInstance.getMaaCore().AsstConnect(maaInstance.getHandle(), adbPath, host, "");
     }
 
-    public String getCurrentTask(){
+    public boolean createHandle() {
+        Pointer maaLink = maaInstance.getMaaCore().AsstCreateEx(callBackMethod, "MaaLink");
+        if (maaLink != null) {
+            maaInstance.setHandle(maaLink);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public String getCurrentTask() {
         return taskStorge.getTaskById(taskStorge.getCurrentTaskId());
+    }
+
+    public void destroy() {
+        if (maaInstance.getHandle() == null){
+            return;
+        }
+        maaInstance.getMaaCore().AsstDestroy(maaInstance.getHandle());
+        maaInstance.setHandle(null);
+    }
+
+    //检查maa链接句斌是否被正确创建
+    private void checkStatus(){
+        if (maaInstance.getHandle() == null){
+            if (!createHandle()){
+//                throw new RuntimeException("Failed to create MaaLink handle");
+            }
+        }
     }
 
 

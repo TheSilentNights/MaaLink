@@ -25,16 +25,16 @@ public class Auth {
                 .compact(); // 生成JWT字符串
     }
 
-    public static boolean checkToken(String token, String verifiedToken, String username) {
+    public static boolean checkToken(String token, String primitiveSubject) {
         // 解析token
         Claims claims;
-        try{
+        try {
             claims = Jwts.parser().verifyWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8))).build().parseSignedClaims(token).getPayload();
-        }catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             return false;
         }
         // 验证负载中的信息
-        return username.equals(claims.getSubject());
+        return primitiveSubject.equals(claims.getSubject());
 
         //全都通过就ok
     }

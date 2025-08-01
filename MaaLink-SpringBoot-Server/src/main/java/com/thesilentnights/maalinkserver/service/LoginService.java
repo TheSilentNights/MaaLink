@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Login {
+public class LoginService {
     @Autowired
     UserInfo userInfo;
     @Autowired
@@ -23,6 +23,6 @@ public class Login {
     }
 
     public boolean verify(String token) {
-        return Auth.checkToken(token, userInfo.getCurrentUserToken(), userInfo.getStoredUserName());
+        return Auth.checkToken(token, userInfo.getStoredUserName() + userInfo.getStoredPassword());
     }
 }
