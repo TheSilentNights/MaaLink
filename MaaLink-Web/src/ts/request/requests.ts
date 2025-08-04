@@ -13,3 +13,15 @@ export async function sendPost(url: string, data:any, withToken: boolean): Promi
         return axios.post(url, data);
     }
 }
+
+export async function sendGet(url: string, withToken: boolean): Promise<AxiosResponse<any, any>> {
+    if (withToken) {
+        return axios.get(url, {
+            headers: {
+                "token": localStorage.getItem("token"),
+            },
+        });
+    } else {
+        return axios.get(url);
+    }
+}

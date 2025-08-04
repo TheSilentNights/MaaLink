@@ -1,58 +1,63 @@
 package com.thesilentnights.maalinkserver.pojo;
 
 
-public class Response<T> {
-    private int code;
-    private String message;
-    private T data;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.http.HttpStatus;
 
+@JsonInclude(JsonInclude.Include.NON_NULL) // 值为null的字段不参与序列化
+public class Response<T> {
+    private int code;       // 状态码
+    private String message; // 消息描述
+    private T data;         // 泛型数据体
+
+    // 私有化构造器（推荐使用静态工厂方法）
     private Response(int code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
     }
 
-    // 成功响应（无数据）
-    public static Response<Void> success() {
-        return new Response<>(200, "操作成功", null);
+    // ===================== 成功响应 =====================
+    public static <T> Response<T> success() {
+        return new Response<>(HttpStatus.OK.value(), "操作成功", null);
     }
 
-    // 成功响应（带数据）
     public static <T> Response<T> success(T data) {
-        return new Response<>(200, "操作成功", data);
+        return new Response<>(HttpStatus.OK.value(), "操作成功", data);
     }
 
-    // 自定义响应
-    public static <T> Response<T> response(int code, String message, T data) {
-        return new Response<>(code, message, data);
+    public static <T> Response<T> success(String message, T data) {
+        return new Response<>(HttpStatus.OK.value(), message, data);
     }
 
-    // 错误响应
+    // ===================== 错误响应 =====================
     public static <T> Response<T> error(int code, String message) {
         return new Response<>(code, message, null);
     }
 
-    public int getCode() {
-        return code;
+    public static <T> Response<T> error(HttpStatus status, String message) {
+        return new Response<>(status.value(), message, null);
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public static <T> Response<T> error(String message) {
+        return new Response<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), message, null);
+    }
+
+    // ===================== 带数据的错误响应 =====================
+    public static <T> Response<T> error(int code, String message, T errorData) {
+        return new Response<>(code, message, errorData);
+    }
+
+    // ===================== Getter =====================
+    public int getCode() {
+        return code;
     }
 
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public T getData() {
         return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
     }
 }

@@ -7,6 +7,7 @@ import com.thesilentnights.maalinkserver.service.MaaLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -17,34 +18,48 @@ public class TaskController {
     MaaLinkService maaLinkService;
     @Autowired
     LoginService loginService;
+    @Autowired
+    MaaStatus maaStatus;
 
     @RequestMapping(value = "/status", method = RequestMethod.GET)
-    public Response<Boolean> getStatus() {
-        if (MaaStatus.isConnected()) {
-            return Response.success(true);
-        } else {
-            return Response.success(false);
-        }
+    public Response<Map<String,Boolean>> getStatus() {
+        return Response.success(new HashMap<String, Boolean>() {{
+            put("isRunning",maaStatus.isRunning());
+            put("isLoaded",maaStatus.isLoaded());
+            put("isConnected",maaStatus.isConnected());
+        }});
     }
 
     @RequestMapping(value = "/appendTask", method = RequestMethod.POST)
-    public Response<Integer> appendTask(@RequestHeader("token") String token, @RequestParam("type") String type, @RequestParam("params") String params) {
-        return Response.success(maaLinkService.appendTask(type, params));
+    public Response<Map<String, Integer>> appendTask(@RequestParam("type") String type, @RequestParam("params") String params) {
+        return Response.success(new HashMap<String, Integer>() {{
+            put("taskId", maaLinkService.appendTask(type, params));
+        }});
     }
 
     @RequestMapping(value = "/start")
-    public Response<Boolean> start() {
-        return Response.success(maaLinkService.start());
+    public Response<Map<String, Boolean>> start() {
+        return Response.success(new HashMap<String, Boolean>() {{
+            ;
+            put("result", maaLinkService.start());
+        }});
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Response<String> login(@RequestBody Map<String, String> payload) {
-        String token = loginService.login(payload.get("username"), payload.get("password"));
-        return Response.response(token != null ? 1 : 0,  token != null ? "success" : "failed",token);
+    public Response<Map<String, String>> login(@RequestBody Map<String, String> body) {
+        String token = loginService.login(body.get("username"), body.get("password"));
+        if (token == null) {
+            return Response.success("登录失败，请检查用户名或密码", null);
+        }
+        return Response.success(new HashMap<String, String>() {{
+            put("token", token);
+        }});
     }
 
     @RequestMapping(value = "/getCurrentTask", method = RequestMethod.GET)
-    public Response<String> getCurrentTask() {
-        return Response.success(maaLinkService.getCurrentTask());
+    public Response<Map<String, String>> getCurrentTask() {
+        Map<String, String> result = new HashMap<>();
+        result.put("taskType", maaLinkService.getCurrentTask());
+        return Response.success(result);
     }
 }

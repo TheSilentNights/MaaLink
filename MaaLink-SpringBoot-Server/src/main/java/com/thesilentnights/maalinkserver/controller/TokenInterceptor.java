@@ -17,8 +17,6 @@ public class TokenInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println(request.getRequestURI());
-        System.out.println();
         // 检查header中的token
         String token = request.getHeader("token");
         if (token == null || token.isEmpty()) {
@@ -28,7 +26,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         }
 
         if (Auth.checkToken(token, userInfo.getStoredUserName() + userInfo.getStoredPassword())) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Invalid token");
             return false;
         }

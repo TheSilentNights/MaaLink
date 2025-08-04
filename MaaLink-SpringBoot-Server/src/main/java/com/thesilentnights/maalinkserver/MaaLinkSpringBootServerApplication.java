@@ -12,10 +12,12 @@ public class MaaLinkSpringBootServerApplication {
 
     public static void main(String[] args) {
         context = SpringApplication.run(MaaLinkSpringBootServerApplication.class, args);
-
-        if (context.getBean(MaaCore.class).AsstLoadResource("..\\")) {
-            MaaStatus.setStatus(true);
+        if (!context.getBean(MaaCore.class).AsstLoadResource("..\\")){
+            throw new RuntimeException("error loading resource，检查你的路径");
         }
+
+        context.getBean(MaaStatus.class).setLoaded(true);
+
     }
 
     public static ApplicationContext getContext() {

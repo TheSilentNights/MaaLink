@@ -3,6 +3,7 @@ package com.thesilentnights.maalinkserver.service;
 import com.sun.jna.Pointer;
 import com.thesilentnights.maalinkserver.jna.CallBackMethod;
 import com.thesilentnights.maalinkserver.repo.MaaInstance;
+import com.thesilentnights.maalinkserver.repo.MaaStatus;
 import com.thesilentnights.maalinkserver.repo.TaskStorge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,12 +21,16 @@ public class MaaLinkService {
     TaskStorge taskStorge;
     @Autowired
     CallBackMethod callBackMethod;
+    @Autowired
+    MaaStatus maaStatus;
 
     public boolean start() {
         checkStatus();
-        if (connect()) {
+        if (!maaStatus.isRunning()) {
+            maaStatus.setRunning(true);
             return maaInstance.getMaaCore().AsstStart(maaInstance.getHandle());
         } else {
+
             return false;
         }
     }
@@ -40,12 +45,11 @@ public class MaaLinkService {
         return taskId;
     }
 
-    private boolean connect() {
-        checkStatus();
-        return maaInstance.getMaaCore().AsstConnect(maaInstance.getHandle(), adbPath, host, "");
+    private void connect() {
+        maaStatus.setConnected(maaInstance.getMaaCore().AsstConnect(maaInstance.getHandle(), adbPath, host, ""));
     }
 
-    public boolean createHandle() {
+    private boolean createHandle() {
         Pointer maaLink = maaInstance.getMaaCore().AsstCreateEx(callBackMethod, "MaaLink");
         if (maaLink != null) {
             maaInstance.setHandle(maaLink);
@@ -59,19 +63,14 @@ public class MaaLinkService {
         return taskStorge.getTaskById(taskStorge.getCurrentTaskId());
     }
 
-    public void destroy() {
-        if (maaInstance.getHandle() == null) {
-            return;
-        }
-        maaInstance.getMaaCore().AsstDestroy(maaInstance.getHandle());
-        maaInstance.setHandle(null);
-    }
-
     //检查maa链接句斌是否被正确创建
     private void checkStatus() {
         if (maaInstance.getHandle() == null) {
             if (!createHandle()) {
                 throw new RuntimeException("Failed to create MaaLink handle");
+            }
+            if (!maaStatus.isConnected()){
+                connect();
             }
         }
     }

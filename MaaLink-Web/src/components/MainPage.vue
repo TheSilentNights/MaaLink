@@ -3,7 +3,12 @@
 </script>
 
 <template>
-    <div>main</div>
+    <el-container>
+        <el-aside>
+
+        </el-aside>
+        <el-main></el-main>
+    </el-container>
 </template>
 
 <style scoped lang="less">
