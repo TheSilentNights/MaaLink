@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MaaStatus {
     private boolean connected = false;
-    private boolean running = false;
     private boolean loaded = false;
 
     public boolean isConnected() {
@@ -14,14 +13,6 @@ public class MaaStatus {
 
     public void setConnected(boolean connected) {
         this.connected = connected;
-    }
-
-    public boolean isRunning() {
-        return running;
-    }
-
-    public void setRunning(boolean running) {
-        this.running = running;
     }
 
     public boolean isLoaded() {

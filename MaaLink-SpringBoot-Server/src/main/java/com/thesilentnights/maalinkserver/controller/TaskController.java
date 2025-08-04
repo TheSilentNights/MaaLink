@@ -24,7 +24,7 @@ public class TaskController {
     @RequestMapping(value = "/status", method = RequestMethod.GET)
     public Response<Map<String,Boolean>> getStatus() {
         return Response.success(new HashMap<String, Boolean>() {{
-            put("isRunning",maaStatus.isRunning());
+            put("isRunning",maaLinkService.isRunning());
             put("isLoaded",maaStatus.isLoaded());
             put("isConnected",maaStatus.isConnected());
         }});
@@ -40,8 +40,14 @@ public class TaskController {
     @RequestMapping(value = "/start")
     public Response<Map<String, Boolean>> start() {
         return Response.success(new HashMap<String, Boolean>() {{
-            ;
             put("result", maaLinkService.start());
+        }});
+    }
+
+    @RequestMapping(value = "/stop")
+    public Response<Map<String,Boolean>> stop(){
+        return Response.success(new HashMap<String,Boolean>(){{
+            put("result",maaLinkService.stop());
         }});
     }
 

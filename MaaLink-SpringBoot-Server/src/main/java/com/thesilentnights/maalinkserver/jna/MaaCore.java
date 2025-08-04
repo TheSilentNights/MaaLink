@@ -24,6 +24,9 @@ public interface MaaCore extends Library {
 
     boolean AsstConnect(Pointer handle, String adb, String host, String config);
 
+    boolean AsstStop(Pointer handle);
+
+    boolean AsstRunning(Pointer handle);
 
     void AsstDestroy(Pointer pointer);
 }

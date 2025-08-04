@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.thesilentnights.maalinkserver.MaaLinkSpringBootServerApplication;
 import com.thesilentnights.maalinkserver.pojo.AsstMsg;
 import com.thesilentnights.maalinkserver.repo.TaskStorge;
+import com.thesilentnights.maalinkserver.service.MaaLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Component;
@@ -36,7 +37,7 @@ public class CallBackMethod implements MaaCore.AsstApiCallback {
 
         //完成任务
         if (msg == AsstMsg.TASK_CHAIN_COMPLETED.getValue()) {
-            System.out.println("finishing Task" + object.getInteger("taskid"));
+            System.out.println("finishing Task" + currentTask.getTaskById(object.getInteger("taskid")));
             Integer taskId = object.getInteger("taskid");
             currentTask.finishTask(taskId);
         }

@@ -26,13 +26,24 @@ public class MaaLinkService {
 
     public boolean start() {
         checkStatus();
-        if (!maaStatus.isRunning()) {
-            maaStatus.setRunning(true);
+        if (!maaInstance.getMaaCore().AsstRunning(maaInstance.getHandle())){
             return maaInstance.getMaaCore().AsstStart(maaInstance.getHandle());
         } else {
 
             return false;
         }
+    }
+
+    public boolean stop() {
+        if (maaInstance.getMaaCore().AsstRunning(maaInstance.getHandle())) {
+            return maaInstance.getMaaCore().AsstStop(maaInstance.getHandle());
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isRunning(){
+        return maaInstance.getMaaCore().AsstRunning(maaInstance.getHandle());
     }
 
     //返回任务参数
@@ -69,7 +80,7 @@ public class MaaLinkService {
             if (!createHandle()) {
                 throw new RuntimeException("Failed to create MaaLink handle");
             }
-            if (!maaStatus.isConnected()){
+            if (!maaStatus.isConnected()) {
                 connect();
             }
         }
