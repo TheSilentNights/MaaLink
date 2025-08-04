@@ -13,6 +13,7 @@ public class Auth {
     private static final String SECRET_KEY = "xC2yV7dQ7dV7hX0gU2cO0iY0bO9yU9rO";
 
     public static String createToken(String id, long ttlMillis) {
+        System.out.println("creating token");
 
         byte[] secretKeyBytes = SECRET_KEY.getBytes(StandardCharsets.UTF_8);
         SecretKeySpec secretKeySpec = new SecretKeySpec(secretKeyBytes, Jwts.SIG.HS256.key().build().getAlgorithm());
@@ -26,6 +27,7 @@ public class Auth {
     }
 
     public static boolean checkToken(String token, String primitiveSubject) {
+        System.out.println("verifying");
         // 解析token
         Claims claims;
         try {
@@ -34,6 +36,7 @@ public class Auth {
             return false;
         }
         // 验证负载中的信息
+
         return primitiveSubject.equals(claims.getSubject());
 
         //全都通过就ok

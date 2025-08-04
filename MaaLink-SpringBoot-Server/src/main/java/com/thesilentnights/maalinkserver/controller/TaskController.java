@@ -7,8 +7,11 @@ import com.thesilentnights.maalinkserver.service.MaaLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v1")
+@CrossOrigin
 public class TaskController {
     @Autowired
     MaaLinkService maaLinkService;
@@ -35,9 +38,9 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Response<String> login(@RequestParam("username") String username, @RequestParam("password") String password) {
-        String token = loginService.login(username, password);
-        return Response.response(token != null ? 1 : 0, token, token != null ? "success" : "failed");
+    public Response<String> login(@RequestBody Map<String, String> payload) {
+        String token = loginService.login(payload.get("username"), payload.get("password"));
+        return Response.response(token != null ? 1 : 0,  token != null ? "success" : "failed",token);
     }
 
     @RequestMapping(value = "/getCurrentTask", method = RequestMethod.GET)
