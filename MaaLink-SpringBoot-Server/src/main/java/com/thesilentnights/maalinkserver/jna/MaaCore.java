@@ -3,6 +3,9 @@ package com.thesilentnights.maalinkserver.jna;
 import com.sun.jna.Callback;
 import com.sun.jna.Library;
 import com.sun.jna.Pointer;
+import com.sun.jna.ptr.ByteByReference;
+import com.sun.jna.ptr.IntByReference;
+import com.sun.jna.ptr.PointerByReference;
 
 public interface MaaCore extends Library {
     String AsstGetVersion();
@@ -27,6 +30,4 @@ public interface MaaCore extends Library {
     boolean AsstStop(Pointer handle);
 
     boolean AsstRunning(Pointer handle);
-
-    void AsstDestroy(Pointer pointer);
 }

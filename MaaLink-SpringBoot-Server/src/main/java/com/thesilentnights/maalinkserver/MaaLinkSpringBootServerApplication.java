@@ -2,6 +2,7 @@ package com.thesilentnights.maalinkserver;
 
 import com.thesilentnights.maalinkserver.jna.MaaCore;
 import com.thesilentnights.maalinkserver.repo.MaaStatus;
+import com.thesilentnights.maalinkserver.service.MaaLinkService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -15,8 +16,9 @@ public class MaaLinkSpringBootServerApplication {
         if (!context.getBean(MaaCore.class).AsstLoadResource("..\\")){
             throw new RuntimeException("error loading resource，检查你的路径");
         }
-
         context.getBean(MaaStatus.class).setLoaded(true);
+
+
 
     }
 

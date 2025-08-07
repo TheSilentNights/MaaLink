@@ -31,9 +31,9 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/appendTask", method = RequestMethod.POST)
-    public Response<Map<String, Integer>> appendTask(@RequestParam("type") String type, @RequestParam("params") String params) {
+    public Response<Map<String, Integer>> appendTask(@RequestBody Map<String,String> body) {
         return Response.success(new HashMap<String, Integer>() {{
-            put("taskId", maaLinkService.appendTask(type, params));
+            put("taskId", maaLinkService.appendTask(body.get("taskType"),body.get("params")) );
         }});
     }
 
@@ -68,4 +68,5 @@ public class TaskController {
         result.put("taskType", maaLinkService.getCurrentTask());
         return Response.success(result);
     }
+
 }
