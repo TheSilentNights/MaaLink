@@ -1,9 +1,13 @@
 package com.thesilentnights.maalinkserver.config;
 
 import com.thesilentnights.maalinkserver.utils.FileChecker;
+import com.thesilentnights.maalinkserver.utils.Scripts;
 import org.springframework.stereotype.Repository;
 
-import java.io.*;
+import javax.script.ScriptException;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Properties;
 
 @Repository
@@ -11,16 +15,8 @@ public class MainConfig {
     long tokenExpiration;
     String adbPath, host;
 
-    public MainConfig() {
-        File file = FileChecker.checkFile("./config.properties");
-        BufferedWriter bufferedWriter;
-        try {
-            bufferedWriter = new BufferedWriter(new FileWriter(file));
-            bufferedWriter.write("token.expiration=\nadb.path=\nservice.host=");
-            bufferedWriter.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public MainConfig() throws ScriptException {
+        File file = FileChecker.checkFile("./config.properties", "token.expiration=\nadb.path=\nservice.host=\n");
         Properties properties = new Properties();
         try {
             properties.load(new FileReader(file));
@@ -29,8 +25,9 @@ public class MainConfig {
         }
         String property = properties.getProperty("token.expiration", Long.toString(7 * 24 * 60 * 60 * 1000));
         adbPath = properties.getProperty("adb.path", "null");
-        host = properties.getProperty("service.host","null");
-        tokenExpiration = Long.parseLong(property);
+        host = properties.getProperty("service.host", "null");
+        //执行计算代码
+        tokenExpiration = (long) Scripts.eval(property);
     }
 
     public long getTokenExpiration() {

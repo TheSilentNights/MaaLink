@@ -19,7 +19,6 @@ public class MaaLinkSpringBootServerApplication {
         context.getBean(MaaStatus.class).setLoaded(true);
 
 
-
     }
 
     public static ApplicationContext getContext() {
